@@ -29,3 +29,10 @@ To include the jQuery library, use:
 $ tonka build SITE_NAME -jquery
 
 ```
+
+To add some text to the body element of the index.html file, use:
+
+```
+$ tonka build SITE_NAME -jquery BODY_TEXT
+
+```

@@ -67,7 +67,7 @@ class Tonka
 	end
 
 	def display_usage
-		puts "usage: tonka <action> SITE_NAME [-options]\n\nThe most common actions:\n\nbuild\s\t\t\tbuilds a basic static site with the name passed in as SITE_NAME\n\nThe most common options:\n\n-jquery \t\tadds jquery to index.html file.\n-css_reset \t\tadds css resetters to style.css file."
+		puts "usage: tonka <action> SITE_NAME [-options] BODY_TEXT\n\nThe most common actions:\n\nbuild\s\t\t\tbuilds a basic static site with the name passed in as SITE_NAME\n\nThe most common options:\n\n-jquery \t\tadds jquery to index.html file.\n-css_reset \t\tadds css resetters to style.css file."
 	end
 
 end
