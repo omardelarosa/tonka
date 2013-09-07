@@ -79,9 +79,9 @@ class Tonka::HTML
 	def initialize(site_name,options=[])
 		site_name = site_name
 		body = options[3] || ""
-		jquery = true if options[1] == "-jquery"
+		jquery = true if options[2] == "-jquery"
 		index_html = File.new("#{site_name}/index.html","w")
-		@layout = "<!DOCTYPE html>\n<html>\n<head>\n<title>#{site_name}</title>\n<link rel=\"stylesheet\" type=\"text/css\" href=\"/stylesheets/style.css\" />\n<script type=\"text/javascripts\" src=\"/javascripts/scripts.js\"></script>#{ "\n\t<script type=\"text/javascripts\" src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js\"></script>" if jquery }\n</head>\n<body>\n#{body}\</body>\n</html>"
+		@layout = "<!DOCTYPE html>\n<html>\n<head>\n<title>#{site_name}</title>\n<link rel=\"stylesheet\" type=\"text/css\" href=\"/stylesheets/style.css\" />\n<script type=\"text/javascripts\" src=\"/javascripts/scripts.js\"></script>#{ "\n<script type=\"text/javascripts\" src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js\"></script>" if jquery == true }\n</head>\n<body>\n#{ body+"\n" }\</body>\n</html>"
 		index_html.puts @layout
 		index_html.close
 	end
