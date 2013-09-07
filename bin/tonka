@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'tonka'
+options = ARGV
+Tonka.new(options)

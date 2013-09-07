@@ -9,4 +9,5 @@ Gem::Specification.new do |s|
 	s.files			= ["lib/tonka.rb"]
 	s.homepage		= "http://rubygems.org/gems/tonka"
 	s.license		= "MIT"
+	s.executables << "tonka"
 end
