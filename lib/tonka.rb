@@ -1,13 +1,14 @@
 # make index page.
 class Tonka
 
-	def initialize
-		if !ARGV[0].nil?
+	def initialize(options=[])
+		options = options || ARGV
+		if !options[0].nil?
 
-			site_name = ARGV[0] || 'sites'
+			site_name = options[0] || 'sites'
 
-			jquery = true if ARGV[1] == '-jquery'
-			css_reset = true if ARGV[1] == '-jquery'
+			jquery = true if options[1] == '-jquery'
+			css_reset = true if options[1] == '-jquery'
 
 			if !Dir.exist? site_name
 
