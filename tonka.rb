@@ -5,16 +5,13 @@ if !ARGV[0].nil?
 	site_name = ARGV[0] || 'sites'
 
 	jquery = true if ARGV[1] == '-jquery'
+	css_reset = true if ARGV[1] == '-jquery'
 
 	if !Dir.exist? site_name
 
 		Dir.mkdir site_name
 		Dir.mkdir "#{site_name}/stylesheets"
 		Dir.mkdir "#{site_name}/javascripts"
-
-		# system('touch sites/index.html')
-		# system('touch sites/stylesheets/style.css')
-		# system('touch sites/javascripts/scripts.js')
 
 		index_html = File.new("#{site_name}/index.html","w")
 		style_css = File.new("#{site_name}/stylesheets/style.css","w")
@@ -49,9 +46,10 @@ if !ARGV[0].nil?
 		puts "a '#{site_name}' directory already exists!"
 	end
 else
-	puts "usage: main.rb <site_name> [-options]
+	puts "usage: tonka.rb SITE_NAME [-options]
 
 The most common options:
     -jquery		adds jquery to index.html file.
+    -css_reset	adds css resetters to style.css file.
 "
 end
