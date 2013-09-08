@@ -39,3 +39,32 @@ To destroy a static site, use:
 ```
 $ tonka destroy SITE_NAME
 ```
+
+
+Updates
+========
+Changes
+---------
+###0.0.1
+
+-added colorized output
+
+-added itemized file creation/destruction messaging
+
+-added unit tests
+
+
+Coming Soon
+-----------
+
+A few features are on the horizon, most notably:
+
+-import JSON/YAML/XML to generate the site content
+
+-pretty-printing of files created
+
+-sinatra/rails generators
+
+-sinatra/rails public folder contents destroyer
+
+-way more input options
