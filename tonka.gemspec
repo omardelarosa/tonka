@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
 	s.name			= "tonka"
-	s.version 		= "0.0.1"
-	s.date			= "2013-09-07"
+	s.version 		= "0.0.2"
+	s.date			= "2013-10-06"
 	s.summary		= "Tonka!"
 	s.description	= "A static site builder."
 	s.authors		= ["Omar Delarosa"]
