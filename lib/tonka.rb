@@ -2,7 +2,12 @@ class Tonka
 
 	attr_accessor :options, :site_name, :action, :messages
 
+	attr_reader :version
+
 	def initialize(options=[])
+
+		@version = "0.0.2b1";
+
 		@options = options || ARGV
 		if !@options[0].nil?
 
@@ -38,6 +43,10 @@ class Tonka
 		@action = @options[0]
 
 		case @action
+
+		when "-v"
+
+			puts @version
 
 		when "build"
 			#handles the 'build' command
@@ -87,7 +96,7 @@ class Tonka::HTML
 		body = options[3] || ""
 		jquery = true if options[2] == "-jquery"
 		index_html = File.new("#{site_name}/index.html","w")
-		@layout = "<!DOCTYPE html>\n<html>\n<head>\n<title>#{site_name}</title>\n<link rel=\"stylesheet\" type=\"text/css\" href=\"stylesheets/style.css\" />\n<script type=\"text/javascript\" src=\"javascripts/scripts.js\"></script>#{ "\n<script type=\"text/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js\"></script>" if jquery == true }\n</head>\n<body>\n#{ body+"\n" }\</body>\n</html>"
+		@layout = "<!DOCTYPE html>\n<html>\n<head>\n<title>#{site_name}</title>\n<link rel=\"stylesheet\" type=\"text/css\" href=\"stylesheets/style.css\" />#{ "\n<script type=\"text/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js\"></script>" if jquery == true }\n<script type=\"text/javascript\" src=\"javascripts/scripts.js\"></script>\n</head>\n<body>\n#{ body+"\n" }\</body>\n</html>"
 		index_html.puts @layout
 		index_html.close
 		puts "\t\tbuilt ".green+"#{site_name}/index.html"
@@ -121,24 +130,24 @@ class Tonka::JS
 end
 
 class String
-  # text colorization
-  def colorize(color_code)
-    "\e[#{color_code}m#{self}\e[0m"
-  end
+	# text colorization
+	def colorize(color_code)
+		"\e[#{color_code}m#{self}\e[0m"
+	end
 
-  def red
-    colorize(31)
-  end
+	def red
+		colorize(31)
+	end
 
-  def green
-    colorize(32)
-  end
+	def green
+		colorize(32)
+	end
 
-  def yellow
-    colorize(33)
-  end
+	def yellow
+		colorize(33)
+	end
 
-  def pink
-    colorize(35)
-  end
+	def pink
+		colorize(35)
+	end
 end
