@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
 	s.name			= "tonka"
-	s.version 		= "0.0.2b1"
+	s.version 		= "0.0.3"
 	s.date			= "2013-10-06"
 	s.summary		= "Tonka!"
 	s.description	= "A static site builder."
