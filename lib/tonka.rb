@@ -124,6 +124,14 @@ class Tonka::HTML
 		tags = []
 		options.each do |option|
 			library_name = option.gsub("-","")
+			if library_name == "backbone" && !options.include?("jquery")
+				jquery = Tonka::JS.new("jquery")
+				tags << jquery.script_tag
+			end
+			if library_name == "backbone" && !options.include?("underscore")
+				underscore = Tonka::JS.new("underscore")
+				tags << underscore.script_tag
+			end
 			Tonka::JS.libraries.each do |library|
 				if library[library_name]
 					js = Tonka::JS.new(library_name)
@@ -132,7 +140,7 @@ class Tonka::HTML
 				end
 			end
 		end
-		tags << Tonka::JS.new("scripts").script_tag
+		tags << Tonka::JS.new("app").script_tag
 		return tags
 	end
 
@@ -171,7 +179,7 @@ class Tonka::JS
 	def generate_file(file_name)
 		
 		js_file = File.new("#{$SITE_NAME}/javascripts/#{file_name}.js","w")
-		if file_name == "scripts"
+		if file_name == "app"
 			js_file_content = "console.log('feed me javascripts')"
 		else 
 			uri = ''
