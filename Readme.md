@@ -76,3 +76,5 @@ $ tonka serve 3000
 - pretty-printing of files created
 
 - way more input options
+
+- bower support
