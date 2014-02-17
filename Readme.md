@@ -1,10 +1,8 @@
-Tonka
-=====
+#Tonka
 
-**Tonka** builds and destroys static HTML sites.
+**Tonka** builds, destroys and serves static HTML sites.
 
-Installation
---------
+##Installation
 
 To install **Tonka** use the following command:
 
@@ -12,9 +10,8 @@ To install **Tonka** use the following command:
 $ gem install tonka
 ```
 
-
-Getting Started
-------
+#Usage
+###Build
 
 To build a blank, basic static site use:
 
@@ -22,49 +19,60 @@ To build a blank, basic static site use:
 $ tonka build SITE_NAME
 ```
 
-To include the jQuery library, use:
+To include the a library, for example, Backbone.js add its name after the site name:
 
 ```
-$ tonka build SITE_NAME -jquery
+$ tonka build SITE_NAME -backbone
 ```
 
-To add some text to the body element of the index.html file, use:
-
-```
-$ tonka build SITE_NAME -jquery BODY_TEXT
-```
-
+###Destroy
 To destroy a static site, use:
 
 ```
 $ tonka destroy SITE_NAME
 ```
 
+###Serve
+To serve the files locally using WEBrick, change into the newly created directory and type "tonka serve":
 
-Updates
-========
-Changes
----------
-###0.0.1
+```
+$ cd SITE_NAME
+$ tonka serve
+```
 
--added colorized output
+An optional port number can also be passed in:
 
--added itemized file creation/destruction messaging
+```
+$ tonka serve 3000
+```
 
--added unit tests
+#Updates
+**0.0.1**
 
+- added colorized output
+- added itemized file creation/destruction messaging
+- added unit tests
 
-Coming Soon
------------
+**0.0.2**
 
-A few features are on the horizon, most notably:
+- misc. code refactoring
 
--import JSON/YAML/XML to generate the site content
+**0.0.3**
 
--pretty-printing of files created
+- more code refactoring
 
--sinatra/rails generators
+**0.0.4**
 
--sinatra/rails public folder contents destroyer
+- added Backbone and Underscore support
 
--way more input options
+**0.0.5**
+
+- added simple WEBrick server and 'serve' command
+
+#Feature Wishlist
+
+- importing JSON/YAML/XML to generate the site content and/or HTML layout.
+
+- pretty-printing of files created
+
+- way more input options

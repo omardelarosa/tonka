@@ -1,4 +1,6 @@
 require 'net/http'
+require 'webrick'
+include WEBrick
 
 class Tonka
 
@@ -18,6 +20,13 @@ class Tonka
 		else
 			display_usage
 		end
+	end
+
+	def serve(port)
+		puts "Starting server: http://#{Socket.gethostname}:#{port}"
+		server = HTTPServer.new(:Port=>port,:DocumentRoot=>Dir::pwd )
+		trap("INT"){ server.shutdown }
+		server.start
 	end
 
 	def make_directories
@@ -76,14 +85,29 @@ class Tonka
 		when "add"
 			#handles the 'add' command
 
+		when "serve"
+			port_string = @options[1] || "2000"
+
+			serve(port_string)
 		else
 			puts "Oops! I don't know that one."
 			display_usage
 		end
+			
 	end
 
 	def display_usage
-		puts "usage: tonka <action> SITE_NAME [-options] BODY_TEXT\n\nThe most common actions:\n\nbuild\s\t\t\tbuilds a basic static site with the name passed in as SITE_NAME\n\nThe most common options:\n\n-jquery \t\tadds jquery to index.html file.\n-underscore \t\tadds underscore.js to the javascripts folder and the index.html file.\n-backbone \t\tadds backbone.js to the javascripts folder and the index.html file."
+		usage_array = ["usage: tonka <action> SITE_NAME [-options] BODY_TEXT\n\n",
+
+										"The most common actions:\n\n",
+										"build\s\t\t\tbuilds a basic static site with the name passed in as SITE_NAME\n\n",
+										"destroy\s\t\t\tdestroys a previously built site with the name passed in as SITE_NAME\n\n",
+										"serve\s\t\t\tserves your files using WEBrick on port 2000 (a different port can be passed in as an argument)\n\n",
+										"The most common options:\n\n","
+										-jquery \t\tadds jquery to index.html file.\n",
+										"-underscore \t\tadds underscore.js to the javascripts folder and the index.html file.\n",
+										"-backbone \t\tadds backbone.js to the javascripts folder and the index.html file."]
+		puts usage_array.join("")
 	end
 
 end

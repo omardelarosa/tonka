@@ -1,10 +1,10 @@
 Gem::Specification.new do |s|
 	s.name			= "tonka"
-	s.version 		= "0.0.4"
-	s.date			= "2013-10-06"
+	s.version 	= "0.0.5"
+	s.date			= (Time.now.strftime "%Y-%m-%d")
 	s.summary		= "Tonka!"
-	s.description	= "A static site builder."
-	s.authors		= ["Omar Delarosa"]
+	s.description	= "A static site builder, destroy and server."
+	s.authors		= ["Omar Delarosa", "Eric Streske"]
 	s.email			= "thedelarosa@gmail.com"
 	s.files			= ["lib/tonka.rb"]
 	s.homepage		= "http://rubygems.org/gems/tonka"
