@@ -103,10 +103,13 @@ class Tonka
 										"build\s\t\t\tbuilds a basic static site with the name passed in as SITE_NAME\n\n",
 										"destroy\s\t\t\tdestroys a previously built site with the name passed in as SITE_NAME\n\n",
 										"serve\s\t\t\tserves your files using WEBrick on port 2000 (a different port can be passed in as an argument)\n\n",
-										"The most common options:\n\n","
-										-jquery \t\tadds jquery to index.html file.\n",
+										"The most common options:\n\n",
+										"-jquery \t\tadds jquery to index.html file.\n",
 										"-underscore \t\tadds underscore.js to the javascripts folder and the index.html file.\n",
-										"-backbone \t\tadds backbone.js to the javascripts folder and the index.html file."]
+										"-backbone \t\tadds backbone.js to the javascripts folder and the index.html file.\n",
+										"-handlebars \t\tadds handlebars.js to the javascripts folder and the index.html file.\n",
+										"-d3 \t\t\tadds d3.js to the javascripts folder and the index.html file.\n"
+									]
 		puts usage_array.join("")
 	end
 
@@ -192,7 +195,9 @@ class Tonka::JS
 		[
 			{"jquery" => "http://code.jquery.com/jquery-1.10.2.min.js"},
 			{"underscore" => "https://raw.github.com/jashkenas/underscore/master/underscore.js"},
-			{"backbone" => "https://raw.github.com/jashkenas/backbone/master/backbone.js"}
+			{"backbone" => "https://raw.github.com/jashkenas/backbone/master/backbone.js"},
+			{"handlebars" => "http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v1.3.0.js"},
+			{"d3" => "https://raw.github.com/mbostock/d3/master/d3.js"}
 		]
 	end
 
