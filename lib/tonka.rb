@@ -108,7 +108,8 @@ class Tonka
 										"-underscore \t\tadds underscore.js to the javascripts folder and the index.html file.\n",
 										"-backbone \t\tadds backbone.js, underscore.js, and jquery.js to the javascripts folder and the index.html file.\n",
 										"-handlebars \t\tadds handlebars.js to the javascripts folder and the index.html file.\n",
-										"-d3 \t\t\tadds d3.js to the javascripts folder and the index.html file.\n"
+										"-d3 \t\t\tadds d3.js to the javascripts folder and the index.html file.\n",
+										"-raphael \t\tadds raphael.js to the javascripts folder and the index.html file.\n"
 									]
 		puts usage_array.join("")
 	end
@@ -211,7 +212,8 @@ class Tonka::JS
 			{"underscore" => "https://raw.github.com/jashkenas/underscore/master/underscore.js"},
 			{"backbone" => "https://raw.github.com/jashkenas/backbone/master/backbone.js"},
 			{"handlebars" => "http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v1.3.0.js"},
-			{"d3" => "https://raw.github.com/mbostock/d3/master/d3.js"}
+			{"d3" => "https://raw.github.com/mbostock/d3/master/d3.js"},
+			{"raphael" => "https://raw.github.com/DmitryBaranovskiy/raphael/master/raphael-min.js"}
 		]
 	end
 
