@@ -106,7 +106,7 @@ class Tonka
 										"The most common options:\n\n",
 										"-jquery \t\tadds jquery to index.html file.\n",
 										"-underscore \t\tadds underscore.js to the javascripts folder and the index.html file.\n",
-										"-backbone \t\tadds backbone.js to the javascripts folder and the index.html file.\n",
+										"-backbone \t\tadds backbone.js, underscore.js, and jquery.js to the javascripts folder and the index.html file.\n",
 										"-handlebars \t\tadds handlebars.js to the javascripts folder and the index.html file.\n",
 										"-d3 \t\t\tadds d3.js to the javascripts folder and the index.html file.\n"
 									]
