@@ -129,8 +129,9 @@ class Tonka::HTML
 		@script_array = add_js_files(options)
 		@layout_array_2 = [
 										"</head>\n",
-										"<body>\n",
-										"\</body>\n",
+										"<body>\n"]
+		@script_array_2 = add_handlebars_template(options)
+		@layout_array_3 = ["</body>\n",
 										"</html>"]
 
 
@@ -140,7 +141,7 @@ class Tonka::HTML
 
 	def render(options)
 		@index_html = File.new("#{$SITE_NAME}/index.html","w")
-		@layout = @layout_array_1.join("") + @script_array.join("") + @layout_array_2.join("")
+		@layout = @layout_array_1.join("") + @script_array.join("") + @layout_array_2.join("") + @script_array_2.join("") + @layout_array_3.join("")
 		@index_html.puts @layout
 		@index_html.close
 		puts "\t\tbuilt ".green+"#{$SITE_NAME}/index.html"
@@ -171,6 +172,19 @@ class Tonka::HTML
 		return tags
 	end
 
+	def add_handlebars_template(options)
+		tag = []
+		handlebars_template = "\t<script id='template' type='text/x-handlebars-template'>\n \t</script>\n"
+		
+		options.each do |option|
+			library_name = option.gsub("-","")
+			if library_name == "handlebars"
+				tag << handlebars_template
+			end
+		end
+
+		return tag
+	end
 
 end
 
