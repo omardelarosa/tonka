@@ -103,10 +103,14 @@ class Tonka
 										"build\s\t\t\tbuilds a basic static site with the name passed in as SITE_NAME\n\n",
 										"destroy\s\t\t\tdestroys a previously built site with the name passed in as SITE_NAME\n\n",
 										"serve\s\t\t\tserves your files using WEBrick on port 2000 (a different port can be passed in as an argument)\n\n",
-										"The most common options:\n\n","
-										-jquery \t\tadds jquery to index.html file.\n",
+										"The most common options:\n\n",
+										"-jquery \t\tadds jquery to index.html file.\n",
 										"-underscore \t\tadds underscore.js to the javascripts folder and the index.html file.\n",
-										"-backbone \t\tadds backbone.js to the javascripts folder and the index.html file."]
+										"-backbone \t\tadds backbone.js, underscore.js, and jquery.js to the javascripts folder and the index.html file.\n",
+										"-handlebars \t\tadds handlebars.js to the javascripts folder and the index.html file.\n",
+										"-d3 \t\t\tadds d3.js to the javascripts folder and the index.html file.\n",
+										"-raphael \t\tadds raphael.js to the javascripts folder and the index.html file.\n"
+									]
 		puts usage_array.join("")
 	end
 
@@ -126,8 +130,9 @@ class Tonka::HTML
 		@script_array = add_js_files(options)
 		@layout_array_2 = [
 										"</head>\n",
-										"<body>\n",
-										"\</body>\n",
+										"<body>\n"]
+		@script_array_2 = add_handlebars_template(options)
+		@layout_array_3 = ["</body>\n",
 										"</html>"]
 
 
@@ -137,7 +142,7 @@ class Tonka::HTML
 
 	def render(options)
 		@index_html = File.new("#{$SITE_NAME}/index.html","w")
-		@layout = @layout_array_1.join("") + @script_array.join("") + @layout_array_2.join("")
+		@layout = @layout_array_1.join("") + @script_array.join("") + @layout_array_2.join("") + @script_array_2.join("") + @layout_array_3.join("")
 		@index_html.puts @layout
 		@index_html.close
 		puts "\t\tbuilt ".green+"#{$SITE_NAME}/index.html"
@@ -168,6 +173,19 @@ class Tonka::HTML
 		return tags
 	end
 
+	def add_handlebars_template(options)
+		tag = []
+		handlebars_template = "\t<script id='template' type='text/x-handlebars-template'>\n \t</script>\n"
+		
+		options.each do |option|
+			library_name = option.gsub("-","")
+			if library_name == "handlebars"
+				tag << handlebars_template
+			end
+		end
+
+		return tag
+	end
 
 end
 
@@ -192,7 +210,10 @@ class Tonka::JS
 		[
 			{"jquery" => "http://code.jquery.com/jquery-1.10.2.min.js"},
 			{"underscore" => "https://raw.github.com/jashkenas/underscore/master/underscore.js"},
-			{"backbone" => "https://raw.github.com/jashkenas/backbone/master/backbone.js"}
+			{"backbone" => "https://raw.github.com/jashkenas/backbone/master/backbone.js"},
+			{"handlebars" => "http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v1.3.0.js"},
+			{"d3" => "https://raw.github.com/mbostock/d3/master/d3.min.js"},
+			{"raphael" => "https://raw.github.com/DmitryBaranovskiy/raphael/master/raphael-min.js"}
 		]
 	end
 
@@ -214,7 +235,7 @@ class Tonka::JS
 		end
 		js_file.puts js_file_content
 		js_file.close
-		script_tag = "\t<script src='/javascripts/#{file_name}.js'></script>\n"
+		script_tag = "\t<script src='javascripts/#{file_name}.js'></script>\n"
 		puts "\t\tbuilt ".green+"#{$SITE_NAME}/javascripts/#{file_name}.js"
 		return script_tag
 	end
