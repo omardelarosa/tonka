@@ -212,7 +212,7 @@ class Tonka::JS
 			{"underscore" => "https://raw.github.com/jashkenas/underscore/master/underscore.js"},
 			{"backbone" => "https://raw.github.com/jashkenas/backbone/master/backbone.js"},
 			{"handlebars" => "http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v1.3.0.js"},
-			{"d3" => "https://raw.github.com/mbostock/d3/master/d3.js"},
+			{"d3" => "https://raw.github.com/mbostock/d3/master/d3.min.js"},
 			{"raphael" => "https://raw.github.com/DmitryBaranovskiy/raphael/master/raphael-min.js"}
 		]
 	end
@@ -235,7 +235,7 @@ class Tonka::JS
 		end
 		js_file.puts js_file_content
 		js_file.close
-		script_tag = "\t<script src='/javascripts/#{file_name}.js'></script>\n"
+		script_tag = "\t<script src='javascripts/#{file_name}.js'></script>\n"
 		puts "\t\tbuilt ".green+"#{$SITE_NAME}/javascripts/#{file_name}.js"
 		return script_tag
 	end
