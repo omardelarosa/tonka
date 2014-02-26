@@ -45,7 +45,6 @@ class Tonka
 
 	def make_files
 		Tonka::HTML.new(@options).render(@options)
-		Tonka::CSS.new(@options)
 	end
 
 	def parse_options(options=[])
@@ -104,6 +103,7 @@ class Tonka
 									 "destroy\s\t\t\tdestroys a previously built site with the name passed in as SITE_NAME\n\n",
 									 "serve\s\t\t\tserves your files using WEBrick on port 2000 (a different port can be passed in as an argument)\n\n",
 									 "The most common options:\n\n",
+									 "-bootstrap \t adds Bootstrap front-end int your stylesheets, javascripts and index.html\n",
 									 "-jquery \t\tadds jquery to index.html file.\n",
 									 "-underscore \t\tadds underscore.js to the javascripts folder and the index.html file.\n",
 									 "-backbone \t\tadds backbone.js, underscore.js, and jquery.js to the javascripts folder and the index.html file.\n",
@@ -112,6 +112,7 @@ class Tonka
 									 "-raphael \t\tadds raphael.js to the javascripts folder and the index.html file.\n",
 									 "-angular \t\tadds angular.js to the javascripts folder and the index.html file. Also adds <html ng-app> at top of the index file.\n"
 									 ]
+
 		puts usage_array.join("")
 	end
 
@@ -129,25 +130,19 @@ class Tonka::HTML
 		else
 			@layout_array_1 = ["<html>\n"]
 		end
-		@layout_array_2 = ["<head>\n",
-											 "\t<title>#{$SITE_NAME}</title>\n",
-											 "\t<link rel=\"stylesheet\" type=\"text/css\" href=\"stylesheets/style.css\" />\n"]
+		@layout_array_2 = ["<head>\n","\t<title>#{$SITE_NAME}</title>\n"]
+		@link_array = add_css_files(options)
 		@script_array = add_js_files(options)
-		@layout_array_3 = [
-			"</head>\n",
-		"<body>\n"]
+		@layout_array_3 = ["</head>\n","<body>\n"]
 		@script_array_2 = add_handlebars_template(options)
-		@layout_array_4 = ["</body>\n",
-											 "</html>"]
-
-
-
-
+		@layout_array_4 = ["</body>\n","</html>"]
 	end
 
 	def render(options)
 		@index_html = File.new("#{$SITE_NAME}/index.html","w")
-		@layout = @layout_array_0.join("") + @layout_array_1.join("") + @script_array.join("") + @layout_array_2.join("") + @script_array_2.join("") + @layout_array_3.join("") + @layout_array_4.join("")
+
+		@layout = @layout_array_0.join("") + @layout_array_1.join("") + @layout_array_2.join("") + @link_array.join("") + @script_array.join("") + @layout_array_3.join("") + @script_array_2.join("") + @layout_array_4.join("")
+
 		@index_html.puts @layout
 		@index_html.close
 		puts "\t\tbuilt ".green+"#{$SITE_NAME}/index.html"
@@ -166,6 +161,10 @@ class Tonka::HTML
 				underscore = Tonka::JS.new("underscore")
 				tags << underscore.script_tag
 			end
+			if library_name == "bootstrap" && !options.include?("jquery")
+				jquery = Tonka::JS.new("jquery")
+				tags << jquery.script_tag
+			end
 			Tonka::JS.libraries.each do |library|
 				if library[library_name]
 					js = Tonka::JS.new(library_name)
@@ -175,6 +174,22 @@ class Tonka::HTML
 			end
 		end
 		tags << Tonka::JS.new("app").script_tag
+		return tags
+	end
+
+	def add_css_files(options)
+		tags = []
+		options.each do |option|
+			library_name = option.gsub("-","")
+			Tonka::CSS.libraries.each do |library|
+				if library[library_name]
+					css = Tonka::CSS.new(library_name)
+					tags << (css.link_tag + "\n")
+
+				end
+			end
+		end
+		tags << (Tonka::CSS.new("style").link_tag + "\n")
 		return tags
 	end
 
@@ -192,19 +207,43 @@ class Tonka::HTML
 		return tag
 	end
 
+
+
 end
 
 class Tonka::CSS
 	#CSS processing module
-	attr_accessor :layout
+	attr_accessor :layout, :link_tag, :libraries
 
-	def initialize(options=[])
-		style_css = File.new("#{$SITE_NAME}/stylesheets/style.css","w")
-		style_css_content = "/* html5doctor.com Reset v1.6.1 - http://cssreset.com */\nhtml,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}nav ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:none}a{margin:0;padding:0;font-size:100%;vertical-align:baseline;background:transparent}ins{background-color:#ff9;color:#000;text-decoration:none}mark{background-color:#ff9;color:#000;font-style:italic;font-weight:bold}del{text-decoration:line-through}abbr[title],dfn[title]{border-bottom:1px dotted;cursor:help}table{border-collapse:collapse;border-spacing:0}hr{display:block;height:1px;border:0;border-top:1px solid #ccc;margin:1em 0;padding:0}input,select{vertical-align:middle}"
-		style_css.puts style_css_content
-		style_css.close
-		puts "\t\tbuilt ".green+"#{$SITE_NAME}/stylesheets/style.css"
+	def self.libraries
+		[
+			{"bootstrap" => "http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"}
+		]
 	end
+
+	def initialize(file_name, options=[])
+		@link_tag = generate_file(file_name)
+	end
+
+	def generate_file(file_name)
+
+		css_file = File.new("#{$SITE_NAME}/stylesheets/#{file_name}.css","w")
+		if file_name == "style"
+			css_file_content = "/*INSERT CSS*/"
+		else
+			uri = ''
+			Tonka::CSS.libraries.each do |library|
+				uri = library[file_name] if library[file_name]
+			end
+			css_file_content = Net::HTTP.get(URI(uri))
+		end
+		css_file.puts css_file_content
+		css_file.close
+		link_tag = "\t<link rel=\"stylesheet\" type=\"text/css\" href=\"stylesheets/#{file_name}.css\" />"
+		puts "\t\tbuilt ".green+"#{$SITE_NAME}/stylesheets/#{file_name}.css"
+		return link_tag
+	end
+
 end
 
 class Tonka::JS
@@ -219,7 +258,8 @@ class Tonka::JS
 			{"handlebars" => "http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v1.3.0.js"},
 			{"d3" => "https://raw.github.com/mbostock/d3/master/d3.min.js"},
 			{"raphael" => "https://raw.github.com/DmitryBaranovskiy/raphael/master/raphael-min.js"},
-			{"angular" => "https://raw.github.com/angular/angular.js/master/src/Angular.js"}
+			{"angular" => "https://raw.github.com/angular/angular.js/master/src/Angular.js"},
+			{"bootstrap" => "http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"}
 		]
 	end
 
