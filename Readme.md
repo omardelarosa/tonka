@@ -69,6 +69,15 @@ $ tonka serve 3000
 
 - added simple WEBrick server and 'serve' command
 
+**0.0.6**
+
+- refactor Tonka::CSS module, etc.
+
+**0.0.7**
+
+- added AngularJS and Bootstrap 3 support
+
+
 #Feature Wishlist
 
 - importing JSON/YAML/XML to generate the site content and/or HTML layout.
