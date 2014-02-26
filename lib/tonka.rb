@@ -10,7 +10,7 @@ class Tonka
 
 	def initialize(options=[])
 
-		@version = "0.0.7";
+		@version = "0.0.8";
 
 		@options = options || ARGV
 		if !@options[0].nil?

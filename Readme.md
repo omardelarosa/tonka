@@ -73,7 +73,7 @@ $ tonka serve 3000
 
 - refactor Tonka::CSS module, etc.
 
-**0.0.7**
+**0.0.7/0.0.8**
 
 - added AngularJS and Bootstrap 3 support
 
