@@ -68,7 +68,7 @@ class Tonka
 			make_directories
 			make_files
 
-			puts "\n\t\tthe construction of "+"#{$SITE_NAME}".green+" is now complete!"		
+			puts "\n\t\tthe construction of "+"#{$SITE_NAME}".green+" is now complete!"
 
 		when "destroy"
 			#handles the 'destroy' command
@@ -92,25 +92,27 @@ class Tonka
 			puts "Oops! I don't know that one."
 			display_usage
 		end
-			
+
 	end
 
 	def display_usage
 		usage_array = ["usage: tonka <action> SITE_NAME [-options] BODY_TEXT\n\n",
 
-										"The most common actions:\n\n",
-										"build\s\t\t\tbuilds a basic static site with the name passed in as SITE_NAME\n\n",
-										"destroy\s\t\t\tdestroys a previously built site with the name passed in as SITE_NAME\n\n",
-										"serve\s\t\t\tserves your files using WEBrick on port 2000 (a different port can be passed in as an argument)\n\n",
-										"The most common options:\n\n",
-										"-jquery \t\tadds jquery to index.html file.\n",
-										"-underscore \t\tadds underscore.js to the javascripts folder and the index.html file.\n",
-										"-backbone \t\tadds backbone.js, underscore.js, and jquery.js to the javascripts folder and the index.html file.\n",
-										"-handlebars \t\tadds handlebars.js to the javascripts folder and the index.html file.\n",
-										"-d3 \t\t\tadds d3.js to the javascripts folder and the index.html file.\n",
-										"-raphael \t\tadds raphael.js to the javascripts folder and the index.html file.\n",
-										"-bootstrap \t adds Bootstrap front-end int your stylesheets, javascripts and index.html\n"
-									]
+									 "The most common actions:\n\n",
+									 "build\s\t\t\tbuilds a basic static site with the name passed in as SITE_NAME\n\n",
+									 "destroy\s\t\t\tdestroys a previously built site with the name passed in as SITE_NAME\n\n",
+									 "serve\s\t\t\tserves your files using WEBrick on port 2000 (a different port can be passed in as an argument)\n\n",
+									 "The most common options:\n\n",
+									 "-bootstrap \t adds Bootstrap front-end int your stylesheets, javascripts and index.html\n",
+									 "-jquery \t\tadds jquery to index.html file.\n",
+									 "-underscore \t\tadds underscore.js to the javascripts folder and the index.html file.\n",
+									 "-backbone \t\tadds backbone.js, underscore.js, and jquery.js to the javascripts folder and the index.html file.\n",
+									 "-handlebars \t\tadds handlebars.js to the javascripts folder and the index.html file.\n",
+									 "-d3 \t\t\tadds d3.js to the javascripts folder and the index.html file.\n",
+									 "-raphael \t\tadds raphael.js to the javascripts folder and the index.html file.\n",
+									 "-angular \t\tadds angular.js to the javascripts folder and the index.html file. Also adds <html ng-app> at top of the index file.\n"
+									 ]
+
 		puts usage_array.join("")
 	end
 
@@ -122,28 +124,25 @@ class Tonka::HTML
 
 	def initialize(options=[])
 		@layout_arrays = []
-		@layout_array_1 = ["<!DOCTYPE html>\n",
-										"<html>\n",
-										"<head>\n",
-										"\t<title>#{$SITE_NAME}</title>\n"
-											]
-		@script_array = add_js_files(options)
+		@layout_array_0 = ["<!DOCTYPE html>\n"]
+		if options.include?("-angular")
+			@layout_array_1 = ["<html ng-app>\n"]
+		else
+			@layout_array_1 = ["<html>\n"]
+		end
+		@layout_array_2 = ["<head>\n","\t<title>#{$SITE_NAME}</title>\n"]
 		@link_array = add_css_files(options)
-		@layout_array_2 = [
-										"</head>\n",
-										"<body>\n"]
+		@script_array = add_js_files(options)
+		@layout_array_3 = ["</head>\n","<body>\n"]
 		@script_array_2 = add_handlebars_template(options)
-		@layout_array_3 = ["</body>\n",
-										"</html>"]
-
-
-
-		
+		@layout_array_4 = ["</body>\n","</html>"]
 	end
 
 	def render(options)
 		@index_html = File.new("#{$SITE_NAME}/index.html","w")
-		@layout = @layout_array_1.join("") + @script_array.join("") + @link_array.join("") + @layout_array_2.join("") + @script_array_2.join("") + @layout_array_3.join("")
+
+		@layout = @layout_array_0.join("") + @layout_array_1.join("") + @layout_array_2.join("") + @link_array.join("") + @script_array.join("") + @layout_array_3.join("") + @script_array_2.join("") + @layout_array_4.join("")
+
 		@index_html.puts @layout
 		@index_html.close
 		puts "\t\tbuilt ".green+"#{$SITE_NAME}/index.html"
@@ -185,19 +184,19 @@ class Tonka::HTML
 			Tonka::CSS.libraries.each do |library|
 				if library[library_name]
 					css = Tonka::CSS.new(library_name)
-					tags << css.link_tag
+					tags << (css.link_tag + "\n")
 
 				end
 			end
 		end
-		tags << Tonka::CSS.new("style").link_tag
+		tags << (Tonka::CSS.new("style").link_tag + "\n")
 		return tags
 	end
 
 	def add_handlebars_template(options)
 		tag = []
 		handlebars_template = "\t<script id='template' type='text/x-handlebars-template'>\n \t</script>\n"
-		
+
 		options.each do |option|
 			library_name = option.gsub("-","")
 			if library_name == "handlebars"
@@ -227,11 +226,11 @@ class Tonka::CSS
 	end
 
 	def generate_file(file_name)
-		
+
 		css_file = File.new("#{$SITE_NAME}/stylesheets/#{file_name}.css","w")
 		if file_name == "style"
 			css_file_content = "/*INSERT CSS*/"
-		else 
+		else
 			uri = ''
 			Tonka::CSS.libraries.each do |library|
 				uri = library[file_name] if library[file_name]
@@ -259,20 +258,21 @@ class Tonka::JS
 			{"handlebars" => "http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v1.3.0.js"},
 			{"d3" => "https://raw.github.com/mbostock/d3/master/d3.min.js"},
 			{"raphael" => "https://raw.github.com/DmitryBaranovskiy/raphael/master/raphael-min.js"},
+			{"angular" => "https://raw.github.com/angular/angular.js/master/src/Angular.js"},
 			{"bootstrap" => "http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"}
 		]
 	end
 
-	def initialize(file_name,options=[]) 
+	def initialize(file_name,options=[])
 		@script_tag = generate_file(file_name)
 	end
 
 	def generate_file(file_name)
-		
+
 		js_file = File.new("#{$SITE_NAME}/javascripts/#{file_name}.js","w")
 		if file_name == "app"
 			js_file_content = "console.log('feed me javascripts')"
-		else 
+		else
 			uri = ''
 			Tonka::JS.libraries.each do |library|
 				uri = library[file_name] if library[file_name]
@@ -286,7 +286,7 @@ class Tonka::JS
 		return script_tag
 	end
 
-	
+
 
 end
 
