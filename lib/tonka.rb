@@ -6,11 +6,11 @@ class Tonka
 
 	attr_accessor :options, :site_name, :action, :messages
 
-	attr_reader :version
+	def self.version
+		"0.0.9"
+	end
 
 	def initialize(options=[])
-
-		@version = "0.0.8";
 
 		@options = options || ARGV
 		if !@options[0].nil?
@@ -55,7 +55,7 @@ class Tonka
 
 		when "-v"
 
-			puts @version
+			puts Tonka.version
 
 		when "build"
 			#handles the 'build' command
