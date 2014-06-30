@@ -252,13 +252,13 @@ class Tonka::JS
 
 	def self.libraries
 		[
-			{"jquery" => "http://code.jquery.com/jquery-1.10.2.min.js"},
-			{"underscore" => "https://raw.github.com/jashkenas/underscore/master/underscore.js"},
-			{"backbone" => "https://raw.github.com/jashkenas/backbone/master/backbone.js"},
+			{"jquery" => "http://code.jquery.com/jquery-1.11.1.min.js"},
+			{"underscore" => "http://underscorejs.org/underscore-min.js"},
+			{"backbone" => "http://backbonejs.org/backbone-min.js"},
 			{"handlebars" => "http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v1.3.0.js"},
-			{"d3" => "https://raw.github.com/mbostock/d3/master/d3.min.js"},
-			{"raphael" => "https://raw.github.com/DmitryBaranovskiy/raphael/master/raphael-min.js"},
-			{"angular" => "https://raw.github.com/angular/angular.js/master/src/Angular.js"},
+			{"d3" => "http://d3js.org/d3.v3.min.js"},
+			{"raphael" => "http://cdn.rawgit.com/DmitryBaranovskiy/raphael/master/raphael-min.js"},
+			{"angular" => "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.13/angular.min.js"},
 			{"bootstrap" => "http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"}
 		]
 	end
