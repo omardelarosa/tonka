@@ -77,6 +77,10 @@ $ tonka serve 3000
 
 - added AngularJS and Bootstrap 3 support
 
+**0.0.9**
+
+- updates to file urls
+
 
 #Feature Wishlist
 
